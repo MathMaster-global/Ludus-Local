@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Ludus</title>
+<link href="https://cdn.jsdelivr.net/gh/Ludus-hub/Pictures@Main/Pictures/Non-edited/Math-n.webp" id="favicon" rel="icon"/>
+<link href="https://cdn.jsdelivr.net/gh/Ludus-hub/core-site@Main/Style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div id="unofficialBuildBanner" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 10000; display: flex; align-items: center; gap: 15px; padding: 10px 20px 10px 24px; background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(15px) saturate(180%); -webkit-backdrop-filter: blur(15px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 24px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); color: white; width: max-content; max-width: 90%; transition: opacity 0.3s ease;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <svg fill="none" height="20" stroke="var(--accent-color, #00C9FF)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" x2="12" y1="16" y2="12"></line>
+            <line x1="12" x2="12.01" y1="8" y2="8"></line>
+        </svg>
+        <div style="display: flex; flex-direction: column; text-align: left;">
+            <span style="font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 600;">Unofficial Build</span>
+            <span style="font-family: 'Inter', system-ui, sans-serif; font-size: 12px; color: rgba(255, 255, 255, 0.7);">This is an independent, open-source build — not affiliated with, endorsed by, or supported by the official site.</span>
+        </div>
+    </div>
+    <button onclick="document.getElementById('unofficialBuildBanner').style.display='none'" style="background: transparent; border: none; color: rgba(255,255,255,0.5); cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; transition: 0.2s ease; flex-shrink: 0;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+        <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>
+    </button>
+</div>
+
+<!-- ═══════════════════ CONTENT WARNING MODAL ═══════════════════ -->
+<div id="contentWarnModal" style="
+    display: none; position: fixed; inset: 0; z-index: 1000010;
+    align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
+  <div style="
+      background: rgba(18,18,18,0.97);
+      border-radius: 20px; padding: 36px 32px 28px;
+      width: 90%; max-width: 420px; text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+      position: relative;
+      animation: cwFadeIn 0.25s cubic-bezier(0.2,0.8,0.2,1);">
+
+    <!-- Warning icon -->
+    <div style="width:56px;height:56px;border-radius:50%;
+        background:rgba(255,80,50,0.12);border:1px solid rgba(255,80,50,0.35);
+        display:flex;align-items:center;justify-content:center;
+        margin:0 auto 18px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"
+           stroke="#FF5032" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+    </div>
+
+    <div style="display:inline-block;background:rgba(255,80,50,0.12);
+        border:1px solid rgba(255,80,50,0.3);border-radius:99px;
+        padding:4px 14px;font-size:11px;font-weight:700;color:#FF5032;
+        letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;">
+      Content Warning
+    </div>
+
+    <h2 style="color:white;font-size:20px;font-weight:700;margin:0 0 14px;">
+      Proceed with Caution
+    </h2>
+
+    <!-- Violence body -->
+    <div id="cwBodyViolence">
+      <p style="color:rgba(255,255,255,0.72);font-size:14px;line-height:1.6;margin:0 0 18px;">
+        This game contains <strong style="color:white;">violence, disturbing imagery,
+        and mature themes</strong> that some players may find upsetting.<br><br>
+        Player discretion is strongly advised.
+      </p>
+    </div>
+
+    <!-- Self-harm body -->
+    <div id="cwBodySelfharm" style="display:none;">
+      <p style="color:rgba(255,255,255,0.72);font-size:14px;line-height:1.6;margin:0 0 10px;">
+        This game contains <strong style="color:white;">depictions of suicide,
+        self-harm, and deeply distressing content</strong>.<br><br>
+        Please take care of yourself. If you or someone you know is struggling,
+        help is available.
+      </p>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+          border-radius:12px;padding:12px 16px;margin-bottom:18px;text-align:left;">
+        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.45);
+            text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">
+          Crisis Resources
+        </div>
+        <div style="color:white;font-size:14px;font-weight:600;margin-bottom:3px;">
+          📞 988 Suicide &amp; Crisis Lifeline
+        </div>
+        <div style="color:rgba(255,255,255,0.6);font-size:13px;margin-bottom:8px;">
+          Call or text <strong style="color:white;">988</strong> (US) — available 24/7
+        </div>
+        <div style="color:white;font-size:14px;font-weight:600;margin-bottom:3px;">
+          💬 Crisis Text Line
+        </div>
+        <div style="color:rgba(255,255,255,0.6);font-size:13px;">
+          Text <strong style="color:white;">HOME</strong> to <strong style="color:white;">741741</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button id="cwProceedBtn" style="
+          width:100%;padding:13px;border:none;border-radius:12px;
+          background:rgba(255,80,50,0.18);border:1px solid rgba(255,80,50,0.4);
+          color:#FF5032;font-size:14px;font-weight:700;cursor:pointer;
+          transition:background 0.2s;"
+        onmouseover="this.style.background='rgba(255,80,50,0.28)'"
+        onmouseout="this.style.background='rgba(255,80,50,0.18)'">
+        I understand — Continue
+      </button>
+      <button onclick="document.getElementById('contentWarnModal').style.display='none'" style="
+          width:100%;padding:12px;border:none;border-radius:12px;
+          background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);
+          color:rgba(255,255,255,0.8);font-size:14px;font-weight:600;cursor:pointer;
+          transition:background 0.2s;"
+        onmouseover="this.style.background='rgba(255,255,255,0.12)'"
+        onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+        Go Back
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<style>
+@keyframes cwFadeIn {
+  from { opacity: 0; transform: scale(0.93) translateY(8px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);   }
+}
+</style>
+<!-- ════════════════ END CONTENT WARNING MODAL ════════════════ -->
+
+<div id="loginGate" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 999999;">
+<div style="position: relative; z-index: 10; text-align: center; background: rgba(0,0,0,0.4); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); width:90%; max-width:320px;">
+<h2 style="margin-bottom: 20px; font-size: 24px; font-weight: 500; color:white;">Welcome</h2>
+<input class="settings-input" id="authPasswordInput" placeholder="Password" type="password"/>
+<label style="display: none; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; color: #ccc;">
+<span>Remember Me</span>
+<input checked="" id="rememberToggle" type="checkbox"/>
+</label>
+<button onclick="checkPassword()" style="width: 100%; background: white; color: black; font-weight: bold; padding: 12px;">Unlock</button>
+<p id="loginError" style="margin-top: 15px; color: #ff453a; display: none;">Incorrect password</p>
+<p id="loginLimit" style="margin-top: 15px; color: #ff453a; display: none;">Device limit reached</p>
+</div>
+</div>
+
+<div class="app-section active-section fullscreen-app" id="app-home" style="overflow-y: auto;">
+<div class="home-layout">
+<header class="header">
+<h1 style="margin-bottom: 0;">Math Master</h1>
+<div style="margin-bottom: 10px; margin-top: 5px; text-align: center;">
+<span class="gradient-title" style="font-size: 1.2rem;">by Ludus</span>
+</div>
+<div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 26px;">
+  <button onclick="showBuildInfo('local')" style="display:flex;align-items:center;gap:6px;background:rgba(0,201,255,0.07);border:1px solid rgba(0,201,255,0.22);color:rgba(0,201,255,0.75);font-size:11px;font-weight:700;padding:5px 12px 5px 10px;border-radius:99px;cursor:pointer;transition:all 0.2s;letter-spacing:0.3px;font-family:'Inter',system-ui,sans-serif;" onmouseover="this.style.background='rgba(0,201,255,0.14)';this.style.borderColor='rgba(0,201,255,0.42)';this.style.color='#00C9FF';this.style.boxShadow='0 0 12px rgba(0,201,255,0.15)'" onmouseout="this.style.background='rgba(0,201,255,0.07)';this.style.borderColor='rgba(0,201,255,0.22)';this.style.color='rgba(0,201,255,0.75)';this.style.boxShadow='none'">
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+    local build
+    <span style="background:rgba(0,201,255,0.18);color:#00C9FF;font-size:8.5px;font-weight:800;padding:1px 6px;border-radius:99px;letter-spacing:0.7px;text-transform:uppercase;">beta</span>
+  </button>
+</div>
+</header>
+
+<!-- Build Info Modal -->
+<div id="buildInfoModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(18,18,18,0.97); border: 1px solid rgba(255,255,255,0.12); color: white; padding: 28px 28px 22px; border-radius: 18px; z-index: 10002; box-shadow: 0 16px 50px rgba(0,0,0,0.85); width: 300px; font-family: 'Inter', system-ui, sans-serif; text-align: center; backdrop-filter: blur(16px);">
+  <div id="buildInfoIcon" style="width:48px;height:48px;border-radius:50%;background:rgba(0,201,255,0.1);border:1px solid rgba(0,201,255,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"></div>
+  <h3 id="buildInfoTitle" style="margin: 0 0 10px; font-size: 16px; font-weight: 700; color: white;"></h3>
+  <p id="buildInfoBody" style="font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; margin: 0 0 20px;"></p>
+  <button onclick="document.getElementById('buildInfoModal').style.display='none';document.getElementById('buildInfoBackdrop').style.display='none';" style="width: 100%; padding: 11px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Got it</button>
+</div>
+<div id="buildInfoBackdrop" onclick="document.getElementById('buildInfoModal').style.display='none';document.getElementById('buildInfoBackdrop').style.display='none';" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);z-index:10001;"></div>
+<div>
+<h2 class="home-section-title">Ludus Ecosystem</h2>
+<div class="home-grid">
+<div class="home-card" onclick="switchSection('app-games', document.querySelector('.dock-btn[data-app=\'app-games\']'))">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<rect x="2" y="6" width="20" height="12" rx="2"></rect>
+<path d="M6 12h4m-2-2v4m4-2h.01M16 12h.01"></path>
+</svg>
+<span>Games/Apps</span>
+</div>
+<div class="home-card" onclick="switchSection('app-music', document.querySelector('.dock-btn[data-app=\'app-music\']'))">
+<svg class="icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+<span>Music</span>
+</div>
+<div class="home-card" onclick="switchSection('app-movies', document.querySelector('.dock-btn[data-app=\'app-movies\']'))">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="20" rx="2.18" ry="2.18" width="20" x="2" y="2"></rect><line x1="7" x2="7" y1="2" y2="22"></line><line x1="17" x2="17" y1="2" y2="22"></line><line x1="2" x2="22" y1="12" y2="12"></line><line x1="2" x2="7" y1="7" y2="7"></line><line x1="2" x2="7" y1="17" y2="17"></line><line x1="17" x2="22" y1="17" y2="17"></line><line x1="17" x2="22" y1="7" y2="7"></line></svg>
+<span>Movies</span>
+</div>
+<div class="home-card" onclick="switchSection('app-calculator', document.querySelector('.dock-btn[data-app=\'app-calculator\']'))">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="20" rx="2" ry="2" width="16" x="4" y="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><line x1="8" x2="8.01" y1="10" y2="10"></line><line x1="12" x2="12.01" y1="10" y2="10"></line><line x1="16" x2="16.01" y1="10" y2="10"></line><line x1="8" x2="8.01" y1="14" y2="14"></line><line x1="12" x2="12.01" y1="14" y2="14"></line><line x1="8" x2="8.01" y1="18" y2="18"></line><line x1="12" x2="12.01" y1="18" y2="18"></line></svg>
+<span>Calculator</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="app-section container" id="app-games" style="display: none;">
+<div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 100px; margin-bottom: 25px;">
+<svg fill="none" height="32" stroke="var(--accent-color, #00C9FF)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="32">
+<rect height="12" rx="2" ry="2" width="20" x="2" y="6"></rect>
+<line x1="6" x2="10" y1="12" y2="12"></line>
+<line x1="8" x2="8" y1="10" y2="14"></line>
+<line x1="15" x2="15.01" y1="13" y2="13"></line>
+<line x1="18" x2="18.01" y1="11" y2="11"></line>
+</svg>
+<h1 class="gradient-title" style="margin: 0; font-size: 32px;">Ludus Games &amp; Apps</h1>
+</div>
+<div id="gameSearchContainer" style="max-width: 650px; margin: 0 auto 30px auto; position: relative; z-index: 100;">
+<div style="display: flex; align-items: center; background: rgba(30,30,30,0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 8px 20px; backdrop-filter: blur(15px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); gap: 10px;">
+<svg fill="none" height="18" stroke="rgba(255,255,255,0.4)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+<input autocomplete="off" id="searchInput" placeholder="Search games & apps..." style="flex: 1; background: transparent; border: none; color: white; font-size: 15px; outline: none; padding: 5px 0;" type="text"/>
+<div style="width: 1px; height: 18px; background: rgba(255,255,255,0.2);"></div>
+<select class="glass-select" id="filterDropdown" title="Filter Games">
+<option value="all">All</option>
+<option value="dev">Dev Favs</option>
+<option value="favs">My Favs</option>
+</select>
+<div style="width: 1px; height: 18px; background: rgba(255,255,255,0.2);"></div>
+<select class="glass-select" id="sortDropdown" title="Sort Games">
+<option value="default">Default</option>
+<option value="az">A-Z</option>
+<option value="recent">Recent</option>
+</select>
+</div>
+<div id="suggestions" style="margin-top: 10px; color: var(--accent-color); font-size: 13px; text-align: center;"></div>
+</div>
+<div id="gameGrid"></div>
+<div class="viewer" id="viewer">
+<div id="game-floating-dock" style="position: absolute; top: 20px; left: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px;">
+<div id="game-dock-header" style="background: rgba(30, 30, 30, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 8px; display: flex; gap: 8px; align-items: center; cursor: grab; box-shadow: 0 4px 15px rgba(0,0,0,0.3); width: max-content; min-width: 120px;">
+<div id="game-dock-drag" style="display:flex; align-items:center; justify-content: center; padding: 0 5px; color: rgba(255,255,255,0.4); flex-shrink: 0;">
+<svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="9" cy="8" fill="currentColor" r="1.5"></circle><circle cx="15" cy="8" fill="currentColor" r="1.5"></circle><circle cx="9" cy="16" fill="currentColor" r="1.5"></circle><circle cx="15" cy="16" fill="currentColor" r="1.5"></circle></svg>
+</div>
+<div id="quickControlsContainer" style="display: flex; gap: 8px; margin: 0 5px;"></div>
+<button class="m-btn" onclick="toggleGameDropdown()" style="padding: 6px; border-radius: 8px; background: rgba(255,255,255,0.05); flex-shrink: 0; margin: 0; min-width: 32px; min-height: 32px; display: flex; align-items: center; justify-content: center;" title="More Options">
+<svg fill="none" height="20" id="game-dock-chevron" stroke="white" stroke-linecap="round" stroke-width="2" style="transition: transform 0.2s;" viewbox="0 0 24 24" width="20"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</div>
+<div class="control-panel" id="game-dock-dropdown" style="display: none; background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 320px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); padding: 15px; flex-direction: column; gap: 20px;">
+<div class="button-section" style="display: flex; flex-direction: column; gap: 10px;">
+<div style="font-size: 11px; font-weight: 800; color: var(--accent-color, #00C9FF); text-transform: uppercase; letter-spacing: 1px;">Viewing Controls</div>
+<div id="viewerControlsContainer" style="display: flex; gap: 8px; flex-wrap: wrap; min-height: 36px; align-items: center; width: 100%;"></div>
+</div>
+<hr style="border-color: rgba(255,255,255,0.05); width: 100%; margin: 0;"/>
+<div class="mixer-section" style="padding-top: 0; display: flex; flex-direction: column; gap: 15px;">
+<div style="font-size: 11px; font-weight: 800; color: var(--accent-color, #00C9FF); text-transform: uppercase; letter-spacing: 1px;">In-Game Mixer</div>
+<div style="display: flex; flex-direction: column; gap: 18px;">
+<div id="game-mixer-music-section" style="display: none; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 15px; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+<img id="game-mix-music-thumb" src="" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 8px; object-fit: cover; display: none;"/>
+<div id="game-mix-music-placeholder" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+<svg fill="none" height="20" stroke="#00C9FF" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+</div>
+<div style="flex: 1; min-width: 0;">
+<div id="game-mix-music-title" style="font-weight: bold; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">Unknown Audio</div>
+<div id="game-mix-music-artist" style="font-size: 11px; color: rgba(255,255,255,0.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Music App</div>
+</div>
+</div>
+<div class="v-row" style="display: flex; align-items: center; gap: 12px;">
+<span style="font-size: 10px; font-weight: bold; color: rgba(255,255,255,0.4); width: 40px;">VOL</span>
+<input class="volume-slider" id="game-vol-music" max="1" min="0" step="0.01" type="range" value="0.8"/>
+</div>
+<div style="display: flex; justify-content: space-around; align-items: center;">
+<button class="m-btn" onclick="directControlMedia('music', 'playPrev')">
+<svg fill="white" height="16" viewbox="0 0 24 24" width="16"><polygon points="19 20 9 12 19 4 19 20"></polygon><line stroke="white" stroke-width="2" x1="5" x2="5" y1="19" y2="5"></line></svg>
+</button>
+<button class="m-btn play-main" id="game-mix-music-play" onclick="directControlMedia('music', 'togglePlay')" style="background: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transform: scale(1); transition: 0.2s;">
+<svg fill="black" height="18" viewbox="0 0 24 24" width="18"><path d="M8 5v14l11-7z"></path></svg>
+</button>
+<button class="m-btn" onclick="directControlMedia('music', 'playNext')">
+<svg fill="white" height="16" viewbox="0 0 24 24" width="16"><polygon points="5 4 15 12 5 20 5 4"></polygon><line stroke="white" stroke-width="2" x1="19" x2="19" y1="5" y2="19"></line></svg>
+</button>
+</div>
+<hr style="border-color: rgba(255,255,255,0.05); width: 100%; margin: 0;"/>
+</div>
+<div id="game-mixer-movie-section" style="display: none; flex-direction: column; gap: 12px;">
+<div style="display: flex; flex-direction: column; gap: 5px; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); text-align: center;">
+<div id="game-mix-movie-title" style="font-weight: bold; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">Unknown Movie</div>
+<div style="display: flex; justify-content: center; gap: 20px; align-items: center; padding-top: 5px;">
+<button class="m-btn" onclick="directControlMedia('movie', 'seekBack')" style="font-size: 11px; font-weight: bold; color: white;">-10s</button>
+<button class="m-btn play-main" id="game-mix-movie-play" onclick="directControlMedia('movie', 'togglePlay')" style="background: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transform: scale(1); transition: 0.2s;">
+<svg fill="black" height="18" viewbox="0 0 24 24" width="18"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+</button>
+<button class="m-btn" onclick="directControlMedia('movie', 'seekForward')" style="font-size: 11px; font-weight: bold; color: white;">+10s</button>
+</div>
+</div>
+<div class="v-row" style="display: flex; align-items: center; gap: 12px;">
+<span style="font-size: 10px; font-weight: bold; color: rgba(255,255,255,0.4); width: 40px;">SEEK</span>
+<input class="volume-slider" id="game-seek-movie" max="100" min="0" step="0.1" type="range" value="0"/>
+</div>
+<div class="v-row" style="display: flex; align-items: center; gap: 12px;">
+<span style="font-size: 10px; font-weight: bold; color: rgba(255,255,255,0.4); width: 40px;">VOL</span>
+<input class="volume-slider" id="game-vol-movie" max="1" min="0" step="0.01" type="range" value="1.0"/>
+</div>
+<hr style="border-color: rgba(255,255,255,0.05); width: 100%; margin: 0;"/>
+</div>
+<div class="v-row" style="display: flex; align-items: center; gap: 12px;">
+<span style="font-size: 10px; font-weight: bold; color: rgba(255,255,255,0.4); width: 40px;">GAME</span>
+<input class="volume-slider" id="game-vol-game" max="1" min="0" step="0.01" type="range" value="1.0"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<iframe class="app-frame" id="gameFrame"  src=""></iframe>
+</div>
+</div>
+
+<div class="app-section fullscreen-app" id="app-calculator" style="display: none;">
+<iframe class="app-frame" data-src="https://cdn.jsdelivr.net/gh/Ludus-hub/core-site@Main/Versions/Assets/Apps/calc.html" id="calcFrame" src="about:blank"></iframe>
+</div>
+<div class="app-section fullscreen-app" id="app-music" style="display: none;">
+<object class="app-frame" data="about:blank" data-src="https://monochrome.samidy.com/" id="musicFrame" type="text/html"></object>
+</div>
+<div class="app-section fullscreen-app" id="app-movies" style="display: none;">
+<object class="app-frame" data="about:blank" data-src="movie.html" id="moviesFrame" type="text/html"></object>
+</div>
+<div class="home-widget" id="mixer-dock" style="display: none; position: fixed; bottom: 80px; right: 20px; z-index: 10001; width: 340px; padding: 0; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.6); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+<div id="mixer-header" style="background: rgba(255,255,255,0.03); padding: 12px 18px; cursor: grab; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
+<div style="display: flex; align-items: center; gap: 10px;">
+<div style="width: 8px; height: 8px; background: #00C9FF; border-radius: 50%; box-shadow: 0 0 10px #00C9FF;"></div>
+<span style="font-size: 12px; font-weight: 800; letter-spacing: 1px; color: rgba(255,255,255,0.9); text-transform: uppercase;">System Mixer</span>
+</div>
+<div style="display: flex; gap: 8px;">
+<div class="header-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></div>
+<div class="header-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e;"></div>
+<div class="header-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f;"></div>
+</div>
+</div>
+<div style="padding: 20px; display: flex; flex-direction: column; gap: 18px;">
+<div id="mixer-music-section" style="display: none; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 15px; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+<img id="mix-music-thumb" src="" style="width: 45px; height: 45px; background: #1a1a1a; border-radius: 8px; object-fit: cover; display: none;"/>
+<div id="mix-music-placeholder" style="width: 45px; height: 45px; background: #1a1a1a; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+<svg fill="none" height="24" stroke="#00C9FF" stroke-width="2" viewbox="0 0 24 24" width="24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+</div>
+<div style="flex: 1; min-width: 0;">
+<div id="mix-music-title" style="font-weight: bold; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">Unknown Audio</div>
+<div id="mix-music-artist" style="font-size: 11px; color: rgba(255,255,255,0.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Music App</div>
+</div>
+</div>
+<div class="v-row" style="display: flex; align-items: center; gap: 12px;">
+<span style="font-size: 11px; font-weight: bold; color: rgba(255,255,255,0.4); width: 45px;">VOL</span>
+<input class="volume-slider" id="vol-music" max="1" min="0" step="0.01" type="range" value="0.8"/>
+</div>
+<div style="display: flex; justify-content: space-around; align-items: center; padding-top: 5px;">
+<button class="m-btn" onclick="directControlMedia('music', 'playPrev')">
+<svg fill="white" height="20" viewbox="0 0 24 24" width="20"><polygon points="19 20 9 12 19 4 19 20"></polygon><line stroke="white" stroke-width="2" x1="5" x2="5" y1="19" y2="5"></line></svg>
+</button>
+<button class="m-btn play-main" id="mix-music-play" onclick="directControlMedia('music', 'togglePlay')" style="background: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transform: scale(1); transition: 0.2s;">
+<svg fill="black" height="24" id="music-icon-play" viewbox="0 0 24 24" width="24">
+<path d="M8 5v14l11-7z"></path>
+</svg>
+<svg fill="black" height="24" id="music-icon-pause" style="display: none;" viewbox="0 0 24 24" width="24">
+<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+</svg>
+</button>
+<button class="m-btn" onclick="directControlMedia('music', 'playNext')">
+<svg fill="white" height="20" viewbox="0 0 24 24" width="20"><polygon points="5 4 15 12 5 20 5 4"></polygon><line stroke="white" stroke-width="2" x1="19" x2="19" y1="5" y2="19"></line></svg>
+</button>
+</div>
+<hr style="border-color: rgba(255,255,255,0.1); width: 100%; margin: 5px 0;"/>
+</div>
+<div id="mixer-movie-section" style="display: none; flex-direction: column; gap: 12px;">
+<div style="display: flex; flex-direction: column; gap: 5px; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); text-align: center;">
+<div id="mix-movie-title" style="font-weight: bold; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">Unknown Movie</div>
+<div style="display: flex; justify-content: center; gap: 20px; align-items: center; padding-top: 10px;">
+<button class="m-btn" onclick="directControlMedia('movie', 'seekBack')" style="font-size: 12px; font-weight: bold; color: white;">-10s</button>
+<button class="m-btn play-main" id="mix-movie-play" onclick="directControlMedia('movie', 'togglePlay')" style="background: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transform: scale(1); transition: 0.2s;">
+<svg fill="black" height="24" viewbox="0 0 24 24" width="24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+</button>
+<button class="m-btn" onclick="directControlMedia('movie', 'seekForward')" style="font-size: 12px; font-weight: bold; color: white;">+10s</button>
+</div>
+</div>
+<div class="v-row" style="display: flex; align-items: center; gap: 12px;">
+<span style="font-size: 11px; font-weight: bold; color: rgba(255,255,255,0.4); width: 45px;">SEEK</span>
+<input class="volume-slider" id="seek-movie" max="100" min="0" step="0.1" type="range" value="0"/>
+</div>
+<div class="v-row" style="display: flex; align-items: center; gap: 12px;">
+<span style="font-size: 11px; font-weight: bold; color: rgba(255,255,255,0.4); width: 45px;">VOL</span>
+<input class="volume-slider" id="vol-movie" max="1" min="0" step="0.01" type="range" value="1.0"/>
+</div>
+<hr style="border-color: rgba(255,255,255,0.1); width: 100%; margin: 5px 0;"/>
+</div>
+<div class="v-row" style="display: flex; align-items: center; gap: 12px;">
+<span style="font-size: 11px; font-weight: bold; color: rgba(255,255,255,0.4); width: 45px;">GAME</span>
+<input class="volume-slider" id="vol-game" max="1" min="0" step="0.01" type="range" value="1.0"/>
+</div>
+</div>
+</div>
+
+<hr style="border-color: rgba(255,255,255,0.1); width: 100%; margin: 5px 0;"/>
+
+<div class="app-section fullscreen-app" id="app-settings" style="display: none; overflow-y: hidden;">
+<div class="settings-container-wrapper">
+<div class="settings-box">
+<div class="settings-sidebar">
+<div class="settings-sidebar-header">Settings</div>
+<button class="settings-tab-btn active" onclick="switchSettingsTab(event, 'tab-data')">Data &amp; Saves</button>
+<button class="settings-tab-btn" onclick="switchSettingsTab(event, 'tab-disguise')">Disguise &amp; Security</button>
+<button class="settings-tab-btn" onclick="switchSettingsTab(event, 'tab-app-settings')">Viewing Controls</button>
+<button class="settings-tab-btn" onclick="switchSettingsTab(event, 'tab-credits')">Credits</button>
+</div>
+<div class="settings-content-wrapper">
+<div class="settings-content-area">
+<div class="settings-tab-content active" id="tab-data">
+<div class="settings-group">
+<h3 class="settings-group-title">Data &amp; Saves</h3>
+<div class="settings-card">
+<div class="settings-row">
+<div class="settings-info">
+<span class="settings-label">Backup &amp; Restore</span>
+<span class="settings-desc">Export or import your saved games, settings, and local data.</span>
+</div>
+<div class="settings-actions" style="display: flex; gap: 10px;">
+<input accept=".json" id="saveFileInput" onchange="importSave(event)" style="display: none;" type="file"/>
+<button class="settings-btn" onclick="exportSave()">Export</button>
+<button class="settings-btn" onclick="document.getElementById('saveFileInput').click()">Import</button>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<div class="settings-tab-content" id="tab-disguise">
+<div class="settings-group">
+<h3 class="settings-group-title">Disguise &amp; Security</h3>
+<div class="settings-card">
+
+<div class="settings-row">
+<div class="settings-info">
+<span class="settings-label">Global Panic Key</span>
+<span class="settings-desc">Instantly redirect to your panic URL.</span>
+</div>
+<input class="settings-input" id="settingsPanicKey" maxlength="1" style="width: 45px; text-align: center; font-weight: bold;" type="text"/>
+</div>
+<div class="settings-row">
+<div class="settings-info">
+<span class="settings-label">Global Panic URL</span>
+<span class="settings-desc">Where the panic key takes you.</span>
+</div>
+<input class="settings-input" id="settingsPanicURL" placeholder="https://google.com" style="width: 180px;" type="text"/>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="settings-tab-content" id="tab-app-settings">
+<div class="settings-group">
+<h3 class="settings-group-title">Viewing Controls</h3>
+<div class="settings-card" style="margin-bottom: 20px;">
+<div class="settings-row">
+<div class="settings-info">
+<span class="settings-label">Show System Mixer</span>
+<span class="settings-desc">Display the global audio mixer on the home screen.</span>
+</div>
+<label class="ios-switch">
+<input id="settingsMixerToggle" onchange="toggleSystemMixer()" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+</div>
+</div>
+<div class="settings-group" style="margin-top: 20px;">
+<h3 class="settings-group-title">Game Library Defaults</h3>
+<div class="settings-card">
+<div class="settings-row">
+<div class="settings-info">
+<span class="settings-label">Default Filter</span>
+<span class="settings-desc">Choose which games show up first.</span>
+</div>
+<select class="settings-input" id="settingsDefaultFilter" onchange="saveDefaultFilters()">
+<option value="all">All</option>
+<option value="dev">Dev Favs</option>
+<option value="favs">My Favs</option>
+</select>
+</div>
+<div class="settings-row">
+<div class="settings-info">
+<span class="settings-label">Default Sort</span>
+<span class="settings-desc">How games are ordered.</span>
+</div>
+<select class="settings-input" id="settingsDefaultSort" onchange="saveDefaultFilters()">
+<option value="default">Default</option>
+<option value="az">A-Z</option>
+<option value="recent">Recent</option>
+</select>
+</div>
+</div>
+</div>
+<div class="settings-group" style="margin-top: 30px;">
+<h3 class="settings-group-title">Movies App Defaults</h3>
+<div class="settings-card">
+<div class="settings-row">
+<div class="settings-info">
+<span class="settings-label">Default Streaming Server</span>
+<span class="settings-desc">Choose which server loads first for movies &amp; TV.</span>
+</div>
+<select class="settings-input" id="settingsMovieServer" onchange="localStorage.setItem('ludus_server', this.value)">
+<option value="vidrock">Server 1 (Vidrock)</option>
+<option value="vidsrc_pm">Server 2 (Vidsrc.pm)</option>
+<option value="vidsrc_cc">Server 3 (Vidsrc.cc)</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div class="settings-tab-content" id="tab-credits">
+<div class="settings-group">
+<h3 class="settings-group-title">Credits</h3>
+<p style="font-size:13px;color:var(--text-secondary);margin:0 0 12px 5px;">Original creators of all 814 games in Ludus.</p>
+<input id="creditsSearch" oninput="filterCredits(this.value)" placeholder="Search by game name or creator..." style="width:100%;box-sizing:border-box;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.15);color:white;padding:10px 14px;border-radius:10px;font-size:14px;margin-bottom:12px;outline:none;" type="text"/>
+<div class="settings-card" id="creditsListContainer" style="max-height:52vh;overflow-y:auto;padding:0 20px;">
+<div id="creditsList"></div>
+</div>
+<p id="creditsCount" style="font-size:12px;color:var(--text-secondary);margin:8px 0 0 5px;"></p>
+</div>
+</div>
+</div>
+<div class="settings-footer">
+<button class="settings-btn" onclick="resetSettings()" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.3);">Reset to Defaults</button>
+<button class="settings-btn primary" onclick="saveAndRenderControls(); switchSection('app-home', document.querySelector('.dock-btn[data-app=\'app-home\']'));" style="padding: 10px 24px;">Save &amp; Go Home</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="dock-container" id="dockContainer">
+<div class="bottom-dock" id="bottomDock">
+<div class="dock-drag-handle" id="dockDragHandle" title="Drag Dock">
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="24">
+<circle cx="9" cy="8" fill="currentColor" r="1.5"></circle>
+<circle cx="15" cy="8" fill="currentColor" r="1.5"></circle>
+<circle cx="9" cy="16" fill="currentColor" r="1.5"></circle>
+<circle cx="15" cy="16" fill="currentColor" r="1.5"></circle>
+</svg>
+</div>
+<button class="dock-btn active-mode" data-app="app-home" data-tooltip="Home" onclick="switchSection('app-home', this)">
+<svg class="icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+<polyline points="9 22 9 12 15 12 15 22"></polyline>
+</svg>
+</button>
+<button class="dock-btn" data-app="app-games" data-tooltip="Games/Apps" onclick="switchSection('app-games', this)">
+<svg class="icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<rect x="2" y="6" width="20" height="12" rx="2"></rect>
+<path d="M6 12h4m-2-2v4m4-2h.01M16 12h.01"></path>
+</svg>
+</button>
+<button class="dock-btn" data-app="app-music" data-tooltip="Music" onclick="switchSection('app-music', this)">
+<svg class="icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+</button>
+<button class="dock-btn" data-app="app-movies" data-tooltip="Movies" onclick="switchSection('app-movies', this)">
+<svg class="icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<rect height="20" rx="2.18" ry="2.18" width="20" x="2" y="2"></rect>
+<line x1="7" x2="7" y1="2" y2="22"></line>
+<line x1="17" x2="17" y1="2" y2="22"></line>
+<line x1="2" x2="22" y1="12" y2="12"></line>
+<line x1="2" x2="7" y1="7" y2="7"></line>
+<line x1="2" x2="7" y1="17" y2="17"></line>
+<line x1="17" x2="22" y1="17" y2="17"></line>
+<line x1="17" x2="22" y1="7" y2="7"></line>
+</svg>
+</button>
+<button class="dock-btn" data-app="app-calculator" data-tooltip="Calculator" onclick="switchSection('app-calculator', this)">
+<svg class="icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<rect height="20" rx="2" ry="2" width="16" x="4" y="2"></rect>
+<line x1="8" x2="16" y1="6" y2="6"></line>
+<line x1="16" x2="16" y1="14" y2="18"></line>
+<line x1="8" x2="8.01" y1="10" y2="10"></line>
+<line x1="12" x2="12.01" y1="10" y2="10"></line>
+<line x1="16" x2="16.01" y1="10" y2="10"></line>
+<line x1="8" x2="8.01" y1="14" y2="14"></line>
+<line x1="12" x2="12.01" y1="14" y2="14"></line>
+<line x1="8" x2="8.01" y1="18" y2="18"></line>
+<line x1="12" x2="12.01" y1="18" y2="18"></line>
+</svg>
+</button>
+<div class="dock-sep"></div>
+<button class="dock-btn" data-app="app-settings" data-tooltip="Settings" id="settingsBtn" onclick="switchSection('app-settings', this)">
+<svg class="icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+</button>
+<div class="dock-sep collapse-sep"></div>
+<button class="dock-toggle-btn" onclick="toggleDock()">
+<svg fill="none" height="24" id="dockToggleIcon" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+</button>
+</div>
+</div>
+<div class="auth-overlay" id="authModal" style="display: none; z-index: 10001;">
+    <div class="auth-box">
+        <h2 id="authTitle" style="color: white; margin-bottom: 10px;">Log In</h2>
+        <input class="settings-input" id="emailInput" placeholder="Email address" type="email"/>
+        <input class="settings-input" id="passwordInput" placeholder="Password" type="password"/>
+        <div id="authError" style="color: #ff4a4a; font-size: 12px; display: none;">Error message here</div>
+        <button class="settings-btn primary" id="authActionBtn" style="margin-top: 10px;">Log In</button>
+        <p class="auth-toggle-text">
+            <span id="authTogglePrompt">Don't have an account?</span>
+            <strong id="toggleAuthMode" style="cursor: pointer; color: var(--accent-color, #00C9FF);">Sign Up</strong>
+        </p>
+        <div style="display: flex; align-items: center; gap: 10px; margin: 4px 0;">
+            <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.1);"></div>
+            <span style="color: rgba(255,255,255,0.3); font-size: 12px;">or</span>
+            <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.1);"></div>
+        </div>
+        <button id="googleSignInBtn" onclick="signInWithGoogle()" onmouseout="this.style.opacity='1'" onmouseover="this.style.opacity='0.9'" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: white; color: #1a1a1a; border: none; border-radius: 8px; padding: 10px 16px; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.2s;">
+            <svg height="18" viewBox="0 0 48 48" width="18"><path d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" fill="#EA4335"></path><path d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" fill="#4285F4"></path><path d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" fill="#FBBC05"></path><path d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" fill="#34A853"></path></svg>
+            Continue with Google
+        </button>
+        <button class="settings-btn" onclick="document.getElementById('authModal').style.display='none'" style="margin-top: 5px;">Cancel</button>
+    </div>
+</div>
+<div class="home-widget" id="global-dev-console" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; width: 450px; height: 300px; display: none; flex-direction: column; padding: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.8); background: rgba(10, 10, 10, 0.95); border: 1px solid var(--accent-color, #00C9FF); border-radius: 12px; overflow: hidden; transition: width 0.3s, height 0.3s;">
+<div id="console-drag-handle" style="width: 100%; background: rgba(30,30,30,0.8); cursor: grab; padding: 10px 15px; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--accent-color, #00C9FF); display: flex; justify-content: space-between; align-items: center;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="16"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" x2="20" y1="19" y2="19"></line></svg>
+<span style="font-size: 13px; font-weight: bold; font-family: monospace; letter-spacing: 1px;">GLOBAL CONSOLE</span>
+</div>
+<svg fill="none" height="18" onclick="document.getElementById('global-dev-console').style.display='none'" onmouseout="this.style.opacity='0.7'" onmouseover="this.style.opacity='1'" stroke="white" stroke-linecap="round" stroke-width="2" style="cursor:pointer; opacity: 0.7;" viewbox="0 0 24 24" width="18"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>
+</div>
+<div id="console-output" style="flex: 1; overflow-y: auto; padding: 12px; font-family: monospace; font-size: 13px; color: #0f0; display: flex; flex-direction: column; gap: 6px; background: rgba(0,0,0,0.5);"></div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/MathMaster-global/Ludus-Local@main/script-all.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Ludus-hub/core-site@Main/auth.js" type="module"></script>
+
+<script>
+// ─── Multi-repo CDN routing + srcdoc loader ──────────────────────────────
+// Each "bucket" of this site (core code, images, music, and games) lives
+// in its own GitHub repo, because jsDelivr refuses to serve anything from
+// a repo over 50MB. This resolver maps any relative path the original
+// site code uses to the right repo's CDN URL. ALL games -- single-file
+// and folder-based alike (Drive Mad, Monkey Mart, Among Us, etc.) -- now
+// resolve to the Html-games repo. The old games-1, games-2, and games-3
+// repos are retired and nothing on the site points at them anymore.
+//
+// jsDelivr also serves .html as text/plain (security measure on their end),
+// so a plain iframe.src against a CDN .html URL just shows raw source
+// instead of running it. The fix: patch HTMLIFrameElement's src setter
+// globally so any assignment of a jsDelivr .html URL is instead fetched as
+// text and injected via .srcdoc, with a <base> tag scoped to that file's
+// own folder so ITS relative asset references still resolve correctly.
+// This one patch covers every lazy-loaded iframe on the page (games,
+// music, movies, calc, files) without touching the original
+// loadGame()/switchSection() functions at all.
+//
+// Known limitation this can't fix: some game files hardcode root-absolute
+// paths internally (src="/js/foo.js" etc). A <base> tag has no effect on
+// absolute paths, and jsDelivr is a single shared origin, so those
+// specific files will still 404 on their own assets here.
+
+const CDN = {
+    core:  "https://cdn.jsdelivr.net/gh/Ludus-hub/core-site@Main/",
+    pics:  "https://cdn.jsdelivr.net/gh/Ludus-hub/Pictures@Main/",
+    music: "https://cdn.jsdelivr.net/gh/Ludus-hub/music@Main/",
+    htmlG: "https://cdn.jsdelivr.net/gh/Ludus-hub/Html-games@Main/",
+};
+
+function resolveCdnUrl(path) {
+    if (!path || /^https?:\/\//i.test(path)) return path;
+    let p = path.replace(/^\.\//, '');
+    const GD = "Versions/Assets/Game Data/";
+    const MU = "Versions/Assets/Apps/music/";
+    const PI = "Versions/Assets/Pictures/";
+    const AS = "Assets/";
+    let out;
+    if (p.startsWith(GD)) {
+        // Every game -- flat single-file games AND folder-based games like
+        // drive-mad/index.html or monkeymart/index.html -- now lives in the
+        // single Html-games repo. games-1/2/3 are no longer referenced.
+        out = CDN.htmlG + p.slice(GD.length);
+    } else if (p.startsWith(MU)) {
+        out = CDN.music + "music/" + p.slice(MU.length);
+    } else if (p.startsWith(PI)) {
+        out = CDN.pics + p.slice("Versions/Assets/".length);
+    } else if (p.startsWith(AS)) {
+        out = CDN.pics + p.slice(AS.length);
+    } else {
+        out = CDN.core + p;
+    }
+    return encodeURI(out);
+}
+
+// Pre-resolve every game's path + thumbnail once, up front. games is a
+// top-level const in script.js but const only locks the binding, not the
+// array contents, so mutating entries here is safe -- and this runs
+// synchronously, before any DOMContentLoaded/onload handler ever calls
+// renderGamesGrid(), so nothing renders with an unresolved path.
+if (typeof games !== 'undefined') {
+    games.forEach(g => {
+        if (g.path) g.path = resolveCdnUrl(g.path);
+        if (g.logo) g.logo = resolveCdnUrl(g.logo);
+    });
+}
+
+// Generic iframe.src interceptor
+(function () {
+    const desc = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'src')
+              || Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'src');
+    if (!desc) return;
+
+    function loadViaSrcdoc(frame, url) {
+        fetch(url).then(r => {
+            if (!r.ok) throw new Error('fetch failed: ' + r.status);
+            return r.text();
+        }).then(text => {
+            const folder = new URL('.', url).href;
+            let out = text.replace(/(<head[^>]*>)/i, `$1<base href="${folder}">`);
+            if (typeof GAME_PATCH_SCRIPT !== 'undefined' &&
+                (out.includes('ytgame.js') || /pixi/i.test(out))) {
+                out = out.replace(/(<head[^>]*>)/i, '$1' + GAME_PATCH_SCRIPT);
+            }
+            frame.removeAttribute('src');
+            frame.srcdoc = out;
+        }).catch(() => {
+            desc.set.call(frame, url); // last-resort fallback
+        });
+    }
+
+    Object.defineProperty(HTMLIFrameElement.prototype, 'src', {
+        configurable: true,
+        enumerable: true,
+        get() { return desc.get.call(this); },
+        set(value) {
+            if (typeof value === 'string' &&
+                /^https?:\/\/cdn\.jsdelivr\.net\//i.test(value) &&
+                /\.html?(?:[?#]|$)/i.test(value)) {
+                loadViaSrcdoc(this, value);
+            } else {
+                desc.set.call(this, value);
+            }
+        }
+    });
+})();
+</script>
+</body>
+</html>
