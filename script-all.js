@@ -1095,7 +1095,7 @@ function openInNewTab() {
 // ==============================================
 const games = [
 
-  {name:"Love Meter", path:"Versions/Assets/Game Data/love_meter.html", logo:"Versions/Assets/Pictures/Non-edited/LoveMeter-n.webp"},
+   {name:"Love Meter", path:"Versions/Assets/Game Data/love_meter.html", logo:"Versions/Assets/Pictures/Non-edited/LoveMeter-n.webp"},
   {name:"12 Mini Battles", path:"Versions/Assets/Game Data/12 Mini Battles.html", logo:"Versions/Assets/Pictures/Non-edited/12MiniBattles-n.webp"},
   {name:"1v1.lol", path:"Versions/Assets/Game Data/1v1.LoL.html", logo:"Versions/Assets/Pictures/Non-edited/1v1.lol-n.webp"},
   {name:"2048", path:"Versions/Assets/Game Data/2048.html", logo:"Versions/Assets/Pictures/Non-edited/2048-n.webp"},
@@ -1135,7 +1135,6 @@ const games = [
   {name:"Idle Lumber Inc.", path:"Versions/Assets/Game Data/Idle Lumber Inc.html", logo:"Versions/Assets/Pictures/Non-edited/Lumber-n.webp"},
   {name:"Line Rider", path:"Versions/Assets/Game Data/Line Rider.html", logo: "Versions/Assets/Pictures/Non-edited/Line-Rider-n.webp"},
   {name:"Minecraft", path:"Versions/Assets/Game Data/Minecraft 1.8.8.html", logo:"Versions/Assets/Pictures/Non-edited/Minecraft-n.webp",external:true},
-  {name:"Moto X3M 2", path:"Versions/Assets/Game Data/motox3m2/index.html", logo:"Versions/Assets/Pictures/Non-edited/Motox3m2-n.webp"},
   {name:"Moto X3M Pool Party", path:"Versions/Assets/Game Data/Moto X3M Pool Party.html", logo:"Versions/Assets/Pictures/Non-edited/Motox3mPool-n.webp"},
   {name:"Moto X3M Spooky", path:"Versions/Assets/Game Data/Moto X3M Spooky.html", logo:"Versions/Assets/Pictures/Non-edited/Motox3mSpooky-n.webp"},
   {name:"Moto X3M Winter", path:"Versions/Assets/Game Data/Moto X3M Winter.html", logo:"Versions/Assets/Pictures/Non-edited/Motox3mWinter-n.webp"},
@@ -1286,7 +1285,7 @@ const games = [
   {name:"R.E.P.O", path:"./Versions/Assets/Game Data/195.html", logo:"./Versions/Assets/Pictures/Non-edited/195.webp"},
   {name:"ULTRAKILL", path:"./Versions/Assets/Game Data/196-fixed.html", logo:"./Versions/Assets/Pictures/Non-edited/196.webp", external:true},
   {name:"Elastic Man", path:"./Versions/Assets/Game Data/197.html", logo:"./Versions/Assets/Pictures/Non-edited/197.webp"},
-  {name:"Slope", path:"./Versions/Assets/Game Data/Slope.html", logo:"./Versions/Assets/Pictures/Non-edited/198.webp"},
+  {name:"Slope", path:"./Slope.html", logo:"./pics/Slope-n.webp"},
   {name:"Time Shooter 1", path:"./Versions/Assets/Game Data/199.html", logo:"./Versions/Assets/Pictures/Non-edited/199.webp"},
   {name:"Time Shooter 2", path:"./Versions/Assets/Game Data/200.html", logo:"./Versions/Assets/Pictures/Non-edited/200.webp"},
   {name:"Time Shooter 3: SWAT", path:"./Versions/Assets/Game Data/201.html", logo:"./Versions/Assets/Pictures/Non-edited/201.webp"},
@@ -1659,7 +1658,7 @@ const games = [
   {name:"Iron Lung", path:"./Versions/Assets/Game Data/705-fix.html", logo:"./Versions/Assets/Pictures/Non-edited/705.webp"},
   {name:"Traffic Racer", path:"./Versions/Assets/Game Data/707-fix.html", logo:"./Versions/Assets/Pictures/Non-edited/707.webp"},
   {name:"Survivor.io", path:"./Versions/Assets/Game Data/709-fixagain.html", logo:"./Versions/Assets/Pictures/Non-edited/709.webp"},
-  {name:"Monkey Mart",path:"Versions/Assets/Game Data/Monkey Mart.html", logo:"Versions/Assets/Pictures/Non-edited/monkeymart-n.avif"},
+  {name:"Monkey Mart",path:"Monkey Mart.html", logo:"pics/monkeymart-n.avif"},
   {name:"Antonblast", path:"./Versions/Assets/Game Data/711.html", logo:"./Versions/Assets/Pictures/Non-edited/711.webp"},
   {name:"Jumbo Mario", path:"./Versions/Assets/Game Data/712-f.html", logo:"./Versions/Assets/Pictures/Non-edited/712.webp"},
   {name:"Friday Night Funkin vs Tabi", path:"./Versions/Assets/Game Data/714.html", logo:"./Versions/Assets/Pictures/Non-edited/714.webp"},
